@@ -112,6 +112,7 @@ sudo docker run -e 'GIT_REPO=git@git.ngd.io:ngineered/ngineered-website.git' -e 
 
 This will expose the following variables that can be used to template your code.
 ```
+
 MYSQL_HOST=host.x.y.z
 MYSQL_USER=username
 MYSQL_PASS=password
