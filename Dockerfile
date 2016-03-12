@@ -80,7 +80,7 @@ ADD ./index.php /usr/share/nginx/html/index.php
 RUN chown -Rf www-data.www-data /usr/share/nginx/html/
 
 # Expose Ports
-EXPOSE 443
-EXPOSE 80
+EXPOSE 8443
+EXPOSE 8001
 
 CMD ["/bin/bash", "/start.sh"]
