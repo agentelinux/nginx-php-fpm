@@ -36,6 +36,20 @@ fi
 procs=$(cat /proc/cpuinfo |grep processor | wc -l)
 sed -i -e "s/worker_processes 5/worker_processes $procs/" /etc/nginx/nginx.conf
 
+
+# Very dirty hack to replace variables in code with ENVIRONMENT values
+if [[ "$TEMPLATE_NGINX_HTML" != "0" ]] ; then
+  for i in $(env)
+  do
+    variable=$(echo "$i" | cut -d'=' -f1)
+    value=$(echo "$i" | cut -d'=' -f2)
+    if [[ "$variable" != '%s' ]] ; then
+      replace='___'${variable}'___'
+      find /usr/share/nginx/html -type f -name "*.php" -exec sed -i -e 's/'${replace}'/'${value}'/g' {} \;
+    fi
+  done
+fi
+
 # Again set the right permissions (needed when mounting from a volume)
 chown -Rf www-data.www-data /usr/share/nginx/html/
 
